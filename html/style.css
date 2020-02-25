@@ -1,0 +1,44 @@
+.container {
+    width: 90%;
+    border: 1px black;
+    margin-top: 10%;
+    margin-left: 5%;
+    justify-content: center;
+}
+
+.block1 {
+    display: flex;
+    padding: 1%;
+    border: 1px solid #000;
+}
+
+.section1 {
+    display: flex;
+    width: 60%;
+    padding: 1%;
+    border: 1px solid #000;
+}
+
+.section2 {
+    width: 40%;
+    padding: 1%;
+    border: 1px solid #000;
+    background-color: rgb(199, 192, 192);
+}
+
+.block2 {
+    display: flex;
+}
+
+.list-1 {
+    display: inline;
+}
+
+.list-1+::before {
+    content: '/';
+}
+
+.list {
+    width: 25%;
+    padding-left: 10%;
+}
