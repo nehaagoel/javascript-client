@@ -1,5 +1,5 @@
 body {
-    background-image: url("../../Downloads/background.jpg");
+    background-image: url("./images/background.jpg");
 }
 
 .container {
@@ -98,10 +98,7 @@ figure {
     flex-direction: row;
 }
 
-.mobile,
-.rado,
-.c-type,
-.case {
+.item {
     width: 100%;
     display: flex;
     flex-direction: row;
