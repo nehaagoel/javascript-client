@@ -56,7 +56,7 @@ figure {
     flex-direction: column;
     width: 40%;
     padding: 1%;
-    background-color: #e4e4e4;
+    background-color: #eaeaea;
 }
 
 .amt {
@@ -105,6 +105,10 @@ figure {
     flex: 2;
 }
 
+.co_item {
+    border: 6px solid #cec8c8;
+}
+
 .list-1 {
     display: inline;
 }
@@ -114,7 +118,7 @@ figure {
 }
 
 .list {
-    width: 25%;
+    width: 35%;
     padding-left: 10%;
 }
 
