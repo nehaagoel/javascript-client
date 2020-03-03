@@ -11,7 +11,7 @@
 <body>
     <div class='container'>
         <div class='block1'>
-            <b>Checkout </b>
+           <div class="checkout"><b>Checkout </b></div>
             <ul class='list'>
                 <li class='list-1'>
                     Shipping
@@ -23,12 +23,12 @@
                     Confirmation
                 </li>
             </ul>
-            <i class="fa fa-window-close" aria-hidden="true"></i>
-        </div>
+            <div class="icon"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+         </div>
         <div class='block2'>
             <div class='payment'>
                 <div class="wallet">
-                    Wallet
+                   <b>Wallet</b>
                     <hr>
                     <div class="image">
                         <div class="co_image">
@@ -47,20 +47,23 @@
                     </div>
                 </div>
                 <div class='new'>
-                    New Card
+                    <b>New Card</b>
                     <hr>
-                    <br />
+                        <form>
                     <input type="text" id="name" placeholder="Name on Card"><br></br>
                     <input type="text" id="acc" placeholder="xxxx-xxxx-xxxx-xxxx"><br></br>
                     <input type="text" id="exp" placeholder="MM-YY">
                     <input type="text" id="cvv" placeholder="CVV"><br></br>
                     <button class="button">CONTINUE</button>
+                    </form>
                 </div>
             </div>
             <div class='cart'>
                 <div class="first">
                     <div class="item">
-                        <div class="co_item"><img class='a' src="./images/products/mobile-holder.jpg" width="65" height="65"></div>
+                        <div class="co_item">
+                            <img class='item_image' src="./images/products/mobile-holder.jpg">
+                        </div>
                         <div class="amt">
                             <div>
                                 <b> Mobile Holder</b><br><br></div>
@@ -72,7 +75,7 @@
                     </div>
                     <hr>
                     <div class="item">
-                        <div class="co_item"><img src="./images/products/rado.jpg" width="65" height="65"></div>
+                        <div class="co_item"><img class='item_image' src="./images/products/rado.jpg"></div>
                         <div class="amt">
                             <div><b>Rado Watch</b><br><br></div>
                             <div class="buy"> <i>Black</i> <br> <b>Quantity:1</b></div>
@@ -81,7 +84,7 @@
                     </div>
                     <hr>
                     <div class="item">
-                        <div class="co_item"><img src="./images/products/usb-c-2-micro.jpeg" width="65" height="72"></div>
+                        <div class="co_item"><img class='item_image' src="./images/products/usb-c-2-micro.jpeg" ></div>
                         <div class="amt">
                             <div>
                                 <b>C-Type to micro Convertor</b><br><br></div>
@@ -94,7 +97,7 @@
                     <hr>
                     <div class="item">
                         <div class="co_item">
-                            <img src="./images/products/hard-case.jpg" width="65" height="65"></div>
+                            <img class='item_image' src="./images/products/hard-case.jpg"></div>
                         <div class="amt">
                             <div>
                                 <b>Mobile Case</b><br><br> </div>
