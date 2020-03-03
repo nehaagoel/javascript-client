@@ -22,6 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:c": "react-scripts test:c",
     "commit": "npx git-cz",
     "lint": "eslint ./src",
     "lint:fix": "npm run lint --fix",
