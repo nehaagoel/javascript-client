@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Err } from './style';
 
-export const TextField = (props) => {
+const TextField = (props) => {
   const {
     error, arg, dis,
   } = props;
@@ -20,3 +20,5 @@ export const TextField = (props) => {
 
   return outPut;
 };
+
+export default TextField;
