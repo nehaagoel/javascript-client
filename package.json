@@ -12,17 +12,11 @@
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run test:c",
-      "pre-push": "npm run lint && npm run test:c"
-    }
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:c": "react-scripts test:c",
+    "test:c": "react-scripts test --watchAll=false --coverage",
     "commit": "npx git-cz",
     "lint": "eslint ./src",
     "lint:fix": "npm run lint --fix",
