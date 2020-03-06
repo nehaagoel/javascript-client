@@ -1,6 +1,6 @@
 import React from 'react';
 import { Div } from '../../components/TextField/style';
-import { TextField, Slider } from '../../components/index';
+import { TextField, Slider } from '../../components';
 import { banners } from '../../config/constants';
 
 function TextFieldDemo() {
