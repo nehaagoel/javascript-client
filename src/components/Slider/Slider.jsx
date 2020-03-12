@@ -39,7 +39,7 @@ class Slider extends Component {
     if (current === -1 || banner.length === 0) {
       return (
         <>
-          <div>
+          <div align="center">
             <Img src={`${PUBLIC_IMAGE_FOLDER}${defaultbanner}`} alt={altText} height={height} duration={duration} />
           </div>
         </>
