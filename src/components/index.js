@@ -1,3 +1,4 @@
-import TextField from './TextField/TextField';
-
-export default TextField;
+export { default as TextField } from './TextField/TextField';
+export { Slider } from './Slider/index';
+export { default as SelectField } from './Select/SelectField';
+export { default as RadioField } from './Radio/RadioField';

@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Input, Err } from './style';
 
-export const TextField = (props) => {
+const TextField = (props) => {
   const {
-    error, arg, dis,
+    error, arg, dis, onChange,
   } = props;
 
   const outPut = error ? (
@@ -13,10 +14,24 @@ export const TextField = (props) => {
     </>
   ) : (
     <>
-      <Input type="text" placeholder={arg} disabled={dis} />
+      <Input type="text" placeholder={arg} disabled={dis} onChange={onChange} />
       <br />
     </>
   );
 
   return outPut;
+};
+
+export default TextField;
+
+TextField.propTypes = {
+  arg: PropTypes.string,
+  dis: PropTypes.string,
+  error: PropTypes.string,
+  onChange: PropTypes.string.isRequired,
+};
+TextField.defaultProps = {
+  arg: '',
+  dis: '',
+  error: '',
 };
