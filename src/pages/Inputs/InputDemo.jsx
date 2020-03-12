@@ -22,23 +22,12 @@ handleNameChange = (e) => {
 
 handleSportChange = (e) => {
   this.setState({ sport: e.target.value }, () => console.log(this.state));
-  if (e.target.value === 'cricket') {
-    this.setState({ football: '' });
-  } else if (e.target.value === 'football') {
-    this.setState({ cricket: '' });
-  } else {
-    this.setState({ cricket: '', football: '' });
-  }
+  return e.target.value === 'cricket' ? this.setState({ football: '' }) : this.setState({ cricket: '' });
 }
 
 handlePositionChange = (e) => {
   const { sport } = this.state;
-  console.log('handle position change is ', this.state);
-  if (sport === 'cricket') {
-    this.setState({ cricket: e.target.value }, () => console.log(this.state));
-  } else if (sport === 'football') {
-    this.setState({ football: e.target.value }, () => console.log(this.state));
-  }
+  return sport === 'cricket' ? this.setState({ cricket: e.target.value }, () => console.log(this.state)) : this.setState({ football: e.target.value }, () => console.log(this.state));
 }
 
 RadioOption = () => {
