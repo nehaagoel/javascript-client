@@ -41,9 +41,13 @@ handleNameChange = (e) => {
 }
 
 handleSportChange = (e) => {
+<<<<<<< HEAD
   this.setState({ sport: e.target.value }, () => {
     console.log(this.state);
   });
+=======
+  this.setState({ sport: e.target.value }, () => console.log(this.state));
+>>>>>>> 71c5f53f9b6ce418e178a08583d7b5dd8b7cb384
   return e.target.value === 'cricket' ? this.setState({ football: '' }) : this.setState({ cricket: '' });
 }
 
