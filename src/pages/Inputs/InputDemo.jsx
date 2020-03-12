@@ -33,35 +33,13 @@ handleNameChange = (e) => {
 }
 
 handleSportChange = (e) => {
-  this.setState({ sport: e.target.value }, () => {
-    console.log(this.state);
-    this.getError('sport');
-  });
-  if (e.target.value === 'cricket') {
-    this.setState({ football: '' });
-  } else if (e.target.value === 'football') {
-    this.setState({ cricket: '' });
-  } else {
-    this.setState({ cricket: '', football: '' });
-  }
-  this.isTouched();
+  this.setState({ sport: e.target.value }, () => console.log(this.state));
+  return e.target.value === 'cricket' ? this.setState({ football: '' }) : this.setState({ cricket: '' });
 }
 
 handlePositionChange = (e) => {
   const { sport } = this.state;
-  console.log('handle position change is ', this.state);
-  if (sport === 'cricket') {
-    this.setState({ cricket: e.target.value }, () => { this.getError(sport); });
-  } else if (sport === 'football') {
-    this.setState({ football: e.target.value }, () => { this.getError(sport); });
-  }
-  this.isTouched();
-}
-
-handleSpecialtyBlur = () => {
-  const { sport } = this.state;
-  this.getError(sport);
-  this.isTouched();
+  return sport === 'cricket' ? this.setState({ cricket: e.target.value }, () => console.log(this.state)) : this.setState({ football: e.target.value }, () => console.log(this.state));
 }
 
 RadioOption = () => {
@@ -82,8 +60,6 @@ getError = async (key, value) => {
     cricket: yup.string().required('What you do is a required field'),
     football: yup.string().required('What you do is a required field'),
   });
-  // const key = `${[field]}Error`;
-  // schema.validateAt(field, { [field]: this.state[field] })
   try {
     await schema.validateAt(key, value);
     console.log('7');
