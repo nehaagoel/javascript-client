@@ -5,6 +5,7 @@ border: 1px solid gray;
 border-radius: 5px;
 width: 98%;
 padding: 1%;
+color: solid black;
 ${(props) => props.error
   && css`
   border: 1px solid red;
@@ -12,11 +13,7 @@ ${(props) => props.error
 
   `};
 `;
-const Div = styled.div`
-border: 1px solid black;
-padding: 3px;
-`;
 const Err = styled.p`
 color: red;
 `;
-export { Input, Div, Err };
+export { Input, Err };
