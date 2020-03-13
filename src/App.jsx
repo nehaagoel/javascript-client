@@ -1,18 +1,19 @@
 import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import theme from './theme';
+// import { ThemeProvider } from '@material-ui/core/styles';
+// import { Typography } from '@material-ui/core';
+// import theme from './theme';
 // import InputDemo from './pages/Inputs/InputDemo';
-import { ChildrenDemo } from './pages/index';
+import { AddDialog } from './pages/index';
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <AddDialog />
+      {/* <ThemeProvider theme={theme}>
         <Typography>
           <ChildrenDemo />
         </Typography>
-      </ThemeProvider>
+      </ThemeProvider> */}
     </>
   );
 }
