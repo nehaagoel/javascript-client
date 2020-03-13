@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, Div } from './style';
+import { Select, Err } from './style';
 
 function SelectField(props) {
   const {
@@ -8,16 +8,14 @@ function SelectField(props) {
   } = props;
   return (
     <>
-      <Select className={(error === '') ? '' : 'error'} onChange={onChange} error={error} onBlur={onBlur}>
+      <Select onChange={onChange} error={error} onBlur={onBlur}>
         { defaultText && <option>{defaultText}</option>}
         {
           options && options.length
           && options.map(({ value, label }) => <option key={label} value={value}>{label}</option>)
         }
       </Select>
-      <Div className={(error === '') ? '' : 'error'}>
-        {error}
-      </Div>
+      <Err>{error}</Err>
     </>
   );
 }

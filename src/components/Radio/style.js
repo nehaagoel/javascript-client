@@ -1,21 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Input = styled.input`
 display: inline;
-&.error{
+${(props) => props.error
+  && css`
   border: 1px solid red;
-  text-color: red;
-}
-&.noerror{
-  display: none;
-}`;
+  `};`;
 
-const Div = styled.div`
-&.error{
-  color: red;
-}
-&.noerror{
-  display: none;
-}`;
+const Err = styled.p`
+color: red;
+`;
 
-export { Input, Div };
+export { Input, Err };

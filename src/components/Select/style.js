@@ -1,24 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Select = styled.select`
 width: 100%;
 padding: 1%;
-&.error{
+${(props) => props.error
+  && css`
   border: 1px solid red;
-  text-color: red;
-}
-&.noerror{
-  display: none;
-}
+  `};
 `;
 
-const Div = styled.div`
-&.error{
-  color: red;
-}
-&.noerror{
-  display: none;
-}
+const Err = styled.p`
+color: red;
 `;
 
-export { Select, Div };
+export { Select, Err };

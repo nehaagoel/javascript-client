@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Div } from './style';
+import { Input, Err } from './style';
 
 export default function RadioField(props) {
   const {
@@ -10,14 +10,12 @@ export default function RadioField(props) {
     <>
       { options && options.length && options.map(({ value, label }) => (
         <Fragment key={label}>
-          <Input className={(error === '') ? '' : 'error'} type="radio" name="sport" value={value} onChange={onChange} error={error} onBlur={onBlur} />
+          <Input type="radio" name="sport" value={value} onChange={onChange} error={error} onBlur={onBlur} />
           { label }
           <br />
         </Fragment>
       ))}
-      <Div className={(error === '') ? 'noerror' : 'error'}>
-        {error}
-      </Div>
+      <Err>{error}</Err>
     </>
   );
 }
