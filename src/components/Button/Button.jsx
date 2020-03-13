@@ -1,32 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from './style';
+import { Button } from './style';
 
-const ButtonField = (props) => {
+function ButtonField(props) {
   const {
-    disabled,
+    color, style, value, disabled, onClick,
   } = props;
   return (
     <>
-      <Button type="button" disabled={disabled}>Submit</Button>
+      <Button
+        type={value}
+        color={color}
+        disabled={disabled}
+        onClick={onClick}
+        style={style}
+      >
+        {value}
+      </Button>
     </>
   );
-};
-
-export default ButtonField;
+}
 
 ButtonField.propTypes = {
-  // color: PropTypes.string,
+  color: PropTypes.string,
   disabled: PropTypes.bool,
-  // style: PropTypes.objectOf(PropTypes.string),
-  // value: PropTypes.string.isRequired,
-  // onClick: PropTypes.func.isRequired,
-  // error: PropTypes.bool,
+  style: PropTypes.objectOf(PropTypes.string),
+  value: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 ButtonField.defaultProps = {
-  // color: '',
-  disabled: 'false',
-  // style: {},
-  // error: 'false',
+  color: '',
+  disabled: false,
+  style: {},
 };
+
+export default ButtonField;

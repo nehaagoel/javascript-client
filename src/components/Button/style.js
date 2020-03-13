@@ -1,19 +1,33 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const Button = styled.button`{
-padding: 1%;
-border-radius: 4px;
-border: 1px solid grey;
+export const Button = styled.button`
+${(props) => props.type === 'Cancel'
+&& css`
+background: #D0D3D4;
 color: black;
-font-weight: 550;
-}
-&.pass{
-  background-color: green;
-}
-&.disabled{
-  color: grey;
-  border-style: none;
-}
-`;
+padding: 12px;
+font-size: 16px;
+border-radius: 6px;
+border: 1px solid black;
+margin-left: 80%;
 
-export default Button;
+`};
+${(props) => props.disabled === true && props.type === 'Submit' && css`
+background: #D0D3D4;
+color: #B3B6B7;
+padding: 12px;
+font-size: 16px;
+margin: 10px 2px;
+border-radius: 6px;
+margin-left: 10px;
+
+`};
+${(props) => props.disabled === false && props.type === 'Submit' && css`
+background: #4CAF50;
+color: white;
+padding: 12px;
+font-size: 16px;
+margin: 4px 2px;
+border-radius: 6px;
+`};
+`;

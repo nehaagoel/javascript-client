@@ -4,21 +4,19 @@ import { Input, Err } from './style';
 
 const TextField = (props) => {
   const {
-    error, arg, dis, onChange,
+    error, arg, dis, onChange, onBlur,
   } = props;
-
   const outPut = error ? (
     <>
-      <Input type="text" placeholder={arg} error />
-      <Err> Could not be greater than 100 </Err>
+      <Input type="text" placeholder={arg} error onChange={onChange} onBlur={onBlur} />
+      <Err>{error}</Err>
     </>
   ) : (
     <>
-      <Input type="text" placeholder={arg} disabled={dis} onChange={onChange} />
+      <Input type="text" placeholder={arg} disabled={dis} onChange={onChange} onBlur={onBlur} />
       <br />
     </>
   );
-
   return outPut;
 };
 
@@ -29,6 +27,7 @@ TextField.propTypes = {
   dis: PropTypes.string,
   error: PropTypes.string,
   onChange: PropTypes.string.isRequired,
+  onBlur: PropTypes.string.isRequired,
 };
 TextField.defaultProps = {
   arg: '',
