@@ -1,8 +1,19 @@
 import React from 'react';
-// import TextFieldDemo from './pages/TextFieldDemo/TextFieldDemo';
-import InputDemo from './pages/Inputs/InputDemo';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import theme from './theme';
+// import InputDemo from './pages/Inputs/InputDemo';
+import { ChildrenDemo } from './pages/index';
 
 function App() {
-  return (<InputDemo />);
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <Typography>
+          <ChildrenDemo />
+        </Typography>
+      </ThemeProvider>
+    </>
+  );
 }
 export default App;
