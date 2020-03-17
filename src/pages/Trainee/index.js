@@ -1,1 +1,1 @@
-export { AddDialog } from './components';
+export { default as Trainee } from './Trainee';
