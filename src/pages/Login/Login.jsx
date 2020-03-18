@@ -1,27 +1,16 @@
-/* eslint-disable consistent-return */
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
-import EmailIcon from '@material-ui/icons/Email';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import Button from '@material-ui/core/Button';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import {
+  TextField, Typography, CardContent, InputAdornment, Button, Avatar, Card, CssBaseline, withStyles,
+} from '@material-ui/core';
+import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
 import * as yup from 'yup';
-import { Avatar, Card } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const Design = (theme) => ({
   icon: {
     background: 'red',
     marginLeft: theme.spacing(22),
     marginTop: theme.spacing(3),
-  },
-  title: {
-    textAlign: 'center',
   },
   main: {
     width: 400,
@@ -64,6 +53,7 @@ class Login extends React.Component {
       return false;
     }
 
+    // eslint-disable-next-line consistent-return
     getError = (field) => {
       const { touched } = this.state;
       if (touched[field] && this.hasErrors()) {
@@ -94,9 +84,9 @@ class Login extends React.Component {
             <CssBaseline />
             <Card open aria-labelledby="form-dialog-title">
               <Avatar className={classes.icon}>
-                <LockOutlinedIcon />
+                <LockOutlined />
               </Avatar>
-              <Typography variant="h3" className={classes.title}>Login</Typography>
+              <Typography variant="h3" align="center">Login</Typography>
               <CardContent>
                 <form>
                   <div>
@@ -114,7 +104,7 @@ class Login extends React.Component {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <EmailIcon />
+                            <Email />
                           </InputAdornment>
                         ),
                       }}
@@ -136,7 +126,7 @@ class Login extends React.Component {
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <VisibilityOffIcon />
+                            <VisibilityOff />
                           </InputAdornment>
                         ),
                       }}
