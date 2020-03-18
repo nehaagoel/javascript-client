@@ -78,7 +78,7 @@ class AddDialog extends React.Component {
     }
 
     passwordType = (key) => {
-      if (key === 'password' || key === 'confirmPassword') {
+      if (key === 'Password' || key === 'ConfirmPassword') {
         return 'password';
       }
       return '';
