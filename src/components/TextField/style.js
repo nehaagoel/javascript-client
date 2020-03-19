@@ -16,4 +16,7 @@ ${(props) => props.error
 const Err = styled.p`
 color: red;
 `;
-export { Input, Err };
+const Div = styled.div`
+border: 1px solid black;
+`;
+export { Input, Err, Div };

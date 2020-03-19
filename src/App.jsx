@@ -1,18 +1,10 @@
 import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import theme from './theme';
-// import InputDemo from './pages/Inputs/InputDemo';
-import { ChildrenDemo } from './pages/index';
+import Trainee from './pages/Trainee/Trainee';
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Typography>
-          <ChildrenDemo />
-        </Typography>
-      </ThemeProvider>
+      <Trainee />
     </>
   );
 }

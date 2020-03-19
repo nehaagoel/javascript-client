@@ -5,7 +5,6 @@ import { operators } from '../../config/constants';
 export default class Math extends Component {
   result = (first, second, operator) => {
     let answer = first + operator + second;
-    // eslint-disable-next-line no-eval
     answer = (operators.includes(operator)) ? eval(answer) : 'Invalid Operation';
     return answer;
   }
