@@ -22,7 +22,7 @@ const constant = {
   Name: Person,
   Email: Email,
   Password: VisibilityOff,
-  ConfirmPassword: VisibilityOff,
+  'Confirm Password': VisibilityOff,
 };
 
 class AddDialog extends React.Component {
@@ -78,7 +78,7 @@ class AddDialog extends React.Component {
     }
 
     passwordType = (key) => {
-      if (key === 'Password' || key === 'ConfirmPassword') {
+      if (key === 'Password' || key === 'Confirm Password') {
         return 'password';
       }
       return '';
