@@ -1,3 +1,5 @@
+import * as yup from 'yup';
+
 export const PUBLIC_IMAGE_FOLDER = '/images/';
 export const DEFAULT_BANNER_IMAGE = 'banners/default.png';
 export const banners = ['banners/cloud.jpg', 'banners/dns-server.png', 'banners/full-stack-web-development.jpg', 'banners/load-balancer.png'];
@@ -45,4 +47,14 @@ const radioOptionsFootball = [
   },
 ];
 
-export { selectOptions, radioOptionsCricket, radioOptionsFootball };
+const schema = yup.object().shape({
+  email: yup.string()
+    .trim().email().required('Email Address is a required field'),
+  password: yup.string()
+    .required('Password is required')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/, 'Must contain 8 characters, at least one uppercase letter, one lowercase letter and one number'),
+});
+
+export {
+  selectOptions, radioOptionsCricket, radioOptionsFootball, schema,
+};
