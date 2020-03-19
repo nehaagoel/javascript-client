@@ -4,7 +4,7 @@ import {
   TextField, Typography, CardContent, InputAdornment, Button, Avatar, Card, CssBaseline, withStyles,
 } from '@material-ui/core';
 import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
-import * as yup from 'yup';
+import { schema } from '../../config/constants';
 
 const Design = (theme) => ({
   icon: {
@@ -20,14 +20,6 @@ const Design = (theme) => ({
 });
 
 class Login extends React.Component {
-  schema = yup.object().shape({
-    email: yup.string()
-      .trim().email().required('Email Address is a required field'),
-    password: yup.string()
-      .required('Password is required')
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/, 'Must contain 8 characters, at least one uppercase letter, one lowercase letter and one number'),
-  });
-
   constructor(props) {
     super(props);
     this.state = {
@@ -46,7 +38,7 @@ class Login extends React.Component {
 
     hasErrors = () => {
       try {
-        this.schema.validateSync(this.state);
+        schema.validateSync(this.state);
       } catch (err) {
         return true;
       }
@@ -58,7 +50,7 @@ class Login extends React.Component {
       const { touched } = this.state;
       if (touched[field] && this.hasErrors()) {
         try {
-          this.schema.validateSyncAt(field, this.state);
+          schema.validateSyncAt(field, this.state);
           return false;
         } catch (err) {
           return err.message;
