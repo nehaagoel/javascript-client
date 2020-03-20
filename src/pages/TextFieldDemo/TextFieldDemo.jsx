@@ -15,7 +15,7 @@ function TextFieldDemo() {
         <p><b>A valid input</b></p>
         <TextField arg="Accessible" />
         <p><b>An input with errors</b></p>
-        <TextField error arg="101" />
+        <TextField error="Could not be more than" arg="101" />
       </Div>
     </>
   );

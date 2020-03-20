@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-console */
 import React from 'react';
 import * as yup from 'yup';
 import {
@@ -65,7 +62,8 @@ RadioOption = () => {
 };
 
 getError = (field) => {
-  if (this.state.touched[field] && this.hasErrors()) {
+  const { touched } = this.state;
+  if (touched[field] && this.hasErrors()) {
     try {
       this.schema.validateSyncAt(field, this.state);
     } catch (err) {
