@@ -15,7 +15,6 @@ const useStyles = (theme) => ({
 
 function TableComponent(props) {
   const { classes, data, column } = props;
-  console.log('----------------', props);
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="simple table">
