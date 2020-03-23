@@ -4,7 +4,7 @@ import {
   TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper, withStyles,
 } from '@material-ui/core';
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
   table: {
     minWidth: 650,
   },
