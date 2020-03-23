@@ -1,6 +1,7 @@
 import React from 'react';
-// import Trainee from './pages/Trainee/Trainee';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Switch, Redirect, Route,
+} from 'react-router-dom';
 import Login from './pages/Login/Login';
 import {
   TextFieldDemo, InputDemo, ChildrenDemo, Trainee, NotFound,
@@ -11,11 +12,14 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/trainee" />
+        </Route>
         <AuthRoute exact path="/login" component={Login} />
         <PrivateRoute exact path="/input-demo" component={InputDemo} />
         <PrivateRoute exact path="/textfield-demo" component={TextFieldDemo} />
         <PrivateRoute exact path="/children-demo" component={ChildrenDemo} />
-        <PrivateRoute exact path="/" component={Trainee} />
+        <PrivateRoute path="/trainee" component={Trainee} />
         <PrivateRoute component={NotFound} />
       </Switch>
     </Router>
