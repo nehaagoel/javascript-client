@@ -11,7 +11,6 @@ const Footer = () => (
   <>
     <Box mt={2}>
       <Typography variant="body2" color="black" align="center">
-        {/* {' © '} */}
         <CopyrightIcon style={styling} />
       Successive Technology
       </Typography>
