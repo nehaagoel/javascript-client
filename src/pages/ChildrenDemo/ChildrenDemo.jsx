@@ -21,28 +21,16 @@ class ChildrenDemo extends React.Component {
   }
 
   render() {
-    const { classes, children } = this.props;
+    const { classes } = this.props;
     return (
       <>
         <div className={classes.root}>
-          <Math first="2" second="3" operator="+">
-            {this.children}
-          </Math>
-          <Math first="3" second="5" operator="*">
-            {children}
-          </Math>
-          <Math first="30" second="10" operator="/">
-            {children}
-          </Math>
-          <Math first="20" second="15" operator="-">
-            {children}
-          </Math>
-          <Math first="2" second="3" operator="?">
-            {children}
-          </Math>
-          <Math first="2" second="3" operator="^">
-            {children}
-          </Math>
+          <Math first="2" second="3" operator="+" children={this.children} />
+          <Math first="3" second="5" operator="*" children={this.children} />
+          <Math first="30" second="10" operator="/" children={this.children} />
+          <Math first="20" second="15" operator="-" children={this.children} />
+          <Math first="2" second="3" operator="?" children={this.children} />
+          <Math first="2" second="3" operator="^" />
         </div>
       </>
     );
@@ -50,6 +38,5 @@ class ChildrenDemo extends React.Component {
 }
 ChildrenDemo.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.object.isRequired,
 };
 export default withStyles(useStyles)(ChildrenDemo);

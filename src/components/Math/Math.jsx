@@ -27,5 +27,5 @@ Math.propTypes = {
 };
 
 Math.defaultProps = {
-  children: undefined,
+  children: '',
 };

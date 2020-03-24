@@ -18,7 +18,8 @@
       "react/forbid-prop-types": "off",
       "no-unused-vars": "off",
       "react/jsx-props-no-spreading": "off",
-      "no-console": "off"
+      "no-console": "off",
+      "react/no-children-prop": "off"
     },
     "parserOptions": {
       "ecmaVersion": 6,
