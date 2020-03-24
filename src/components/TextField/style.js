@@ -17,6 +17,6 @@ const Err = styled.p`
 color: red;
 `;
 const Div = styled.div`
-border: 1px solid black;
+margin: 2%;
 `;
 export { Input, Err, Div };

@@ -9,8 +9,7 @@ padding: 12px;
 font-size: 16px;
 border-radius: 6px;
 border: 1px solid black;
-margin-left: 80%;
-
+margin-left: 89%;
 `};
 ${(props) => props.disabled === true && props.type === 'Submit' && css`
 background: #D0D3D4;
@@ -19,7 +18,7 @@ padding: 12px;
 font-size: 16px;
 margin: 10px 2px;
 border-radius: 6px;
-margin-left: 10px;
+margin-left: 8px;
 
 `};
 ${(props) => props.disabled === false && props.type === 'Submit' && css`
