@@ -1,11 +1,19 @@
 import React from 'react';
 import * as yup from 'yup';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
 import {
   selectOptions, radioOptionsCricket, radioOptionsFootball,
 } from '../../config/constants';
 import {
   TextField, SelectField, RadioField, ButtonField,
 } from '../../components';
+
+const useStyles = (theme) => ({
+  root: {
+    margin: theme.spacing(2),
+  },
+});
 
 class InputDemo extends React.Component {
   schema = yup.object().shape({
@@ -92,44 +100,49 @@ isTouched = (field) => {
 }
 
 render() {
-  const {
-    sport,
-  } = this.state;
+  const { sport } = this.state;
+  const { classes } = this.props;
   return (
     <>
-      <p><b>Name:</b></p>
-      <TextField error={this.getError('name')} onChange={this.handleNameChange} onBlur={() => this.isTouched('name')} />
-      <p><b>Select the game you play?</b></p>
-      <SelectField
-        error={this.getError('sport')}
-        onChange={this.handleSportChange}
-        options={selectOptions}
-        onBlur={() => this.isTouched('sport')}
-      />
-      <div>
-        {
-          (sport === '' || sport === 'Select') ? ''
-            : (
-              <>
-                <p><b>What you do?</b></p>
-                <RadioField
-                  error={this.getError(sport)}
-                  options={this.RadioOption()}
-                  onChange={this.handlePositionChange}
-                  onBlur={() => this.isTouched(sport)}
-                />
-              </>
-            )
-        }
-      </div>
+      <div className={classes.root}>
+        <p><b>Name:</b></p>
+        <TextField error={this.getError('name')} onChange={this.handleNameChange} onBlur={() => this.isTouched('name')} />
+        <p><b>Select the game you play?</b></p>
+        <SelectField
+          error={this.getError('sport')}
+          onChange={this.handleSportChange}
+          options={selectOptions}
+          onBlur={() => this.isTouched('sport')}
+        />
+        <div>
+          {
+            (sport === '' || sport === 'Select') ? ''
+              : (
+                <>
+                  <p><b>What you do?</b></p>
+                  <RadioField
+                    error={this.getError(sport)}
+                    options={this.RadioOption()}
+                    onChange={this.handlePositionChange}
+                    onBlur={() => this.isTouched(sport)}
+                  />
+                </>
+              )
+          }
+        </div>
 
-      <div>
-        <ButtonField value="Cancel" />
+        <div>
+          <ButtonField value="Cancel" />
 
-        <ButtonField value="Submit" disabled={this.hasErrors()} />
+          <ButtonField value="Submit" disabled={this.hasErrors()} />
+        </div>
       </div>
     </>
   );
 }
 }
-export default InputDemo;
+InputDemo.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(useStyles)(InputDemo);

@@ -1,10 +1,15 @@
-/* eslint-disable no-console */
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import { withStyles, Button } from '@material-ui/core';
 import AddDialog from './components/AddDialog/AddDialog';
-import NavBar from '../../layouts/components/Navbar/Navbar';
 
-export default class Trainee extends React.Component {
+const useStyles = (theme) => ({
+  root: {
+    margin: theme.spacing(2),
+  },
+});
+
+class Trainee extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,13 +37,20 @@ export default class Trainee extends React.Component {
 
   render() {
     const { open } = this.state;
+    const { classes } = this.props;
     return (
       <>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        <div className={classes.root}>
+          <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
         ADD TRAINEE
-        </Button>
-        <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
+          </Button>
+          <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
+        </div>
       </>
     );
   }
 }
+Trainee.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+export default withStyles(useStyles)(Trainee);
