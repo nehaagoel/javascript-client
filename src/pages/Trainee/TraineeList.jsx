@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Link, BrowserRouter as Router,
-} from 'react-router-dom';
-import { withStyles, Button } from '@material-ui/core';
-import AddDialog from './components/AddDialog/AddDialog';
+import { Link } from 'react-router-dom';
+import { Button, withStyles } from '@material-ui/core';
+import { AddDialog } from './components/index';
 import trainees from './data/trainee';
 
 const useStyles = (theme) => ({
   root: {
     margin: theme.spacing(2),
+  },
+  dialog: {
+    textAlign: 'right',
   },
 });
 
@@ -47,8 +48,8 @@ class TraineeList extends React.Component {
         <div className={classes.root}>
           <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
         ADD TRAINEELIST
-            <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
           </Button>
+          <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
           <ul>
             {trainees.map(({ name, id }) => (
               <li key={id}>
@@ -63,10 +64,8 @@ class TraineeList extends React.Component {
     );
   }
 }
-
 TraineeList.propTypes = {
   match: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(useStyles)(TraineeList);
