@@ -5,4 +5,4 @@ export { default as Trainee } from './Trainee/Trainee';
 export { default as TraineeList } from './Trainee/Trainee';
 export { default as Login } from './Login/Login';
 export { default as NavBar } from '../layouts/components/Navbar/Navbar';
-export { default as NotFound } from './NoMatch/NoMatch';
+export { default as NotFound } from './NoMatch';
