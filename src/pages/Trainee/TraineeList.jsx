@@ -73,17 +73,15 @@ class TraineeList extends React.Component {
               ]
             }
           />
-          <Router>
-            <ul>
-              {trainees.map(({ name, id }) => (
-                <li key={id}>
-                  <Link to={`${url}/${id}`}>
-                    {name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Router>
+          <ul>
+            {trainees.map(({ name, id }) => (
+              <li key={id}>
+                <Link to={`${url}/${id}`}>
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </>
     );

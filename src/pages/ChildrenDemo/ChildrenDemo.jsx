@@ -1,7 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
 import { Math } from '../../components';
 
-export default class ChildrenDemo extends React.Component {
+const useStyles = (theme) => ({
+  root: {
+    margin: theme.spacing(2),
+  },
+});
+
+class ChildrenDemo extends React.Component {
   children = (first, second, operator, answer) => {
     switch (operator) {
     case '+': return (`Sum of ${first} and ${second} is ${answer}`);
@@ -13,27 +21,35 @@ export default class ChildrenDemo extends React.Component {
   }
 
   render() {
+    const { classes, children } = this.props;
     return (
       <>
-        <Math first="2" second="3" operator="+">
-          {this.children}
-        </Math>
-        <Math first="3" second="5" operator="*">
-          {this.children}
-        </Math>
-        <Math first="30" second="10" operator="/">
-          {this.children}
-        </Math>
-        <Math first="20" second="15" operator="-">
-          {this.children}
-        </Math>
-        <Math first="2" second="3" operator="?">
-          {this.children}
-        </Math>
-        <Math first="2" second="3" operator="^">
-          {this.children}
-        </Math>
+        <div className={classes.root}>
+          <Math first="2" second="3" operator="+">
+            {this.children}
+          </Math>
+          <Math first="3" second="5" operator="*">
+            {children}
+          </Math>
+          <Math first="30" second="10" operator="/">
+            {children}
+          </Math>
+          <Math first="20" second="15" operator="-">
+            {children}
+          </Math>
+          <Math first="2" second="3" operator="?">
+            {children}
+          </Math>
+          <Math first="2" second="3" operator="^">
+            {children}
+          </Math>
+        </div>
       </>
     );
   }
 }
+ChildrenDemo.propTypes = {
+  classes: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
+};
+export default withStyles(useStyles)(ChildrenDemo);
