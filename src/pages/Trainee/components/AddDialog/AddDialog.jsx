@@ -88,7 +88,7 @@ class AddDialog extends React.Component {
       const {
         open, onClose, onSubmit, classes,
       } = this.props;
-      const { name, email, password } = this.state;
+      const { Name, Email, Password } = this.state;
       const ans = [];
       Object.keys(constant).forEach((key) => {
         ans.push(<Handler
@@ -131,7 +131,7 @@ class AddDialog extends React.Component {
           &nbsp;
               <div align="right">
                 <Button onClick={onClose} color="primary">CANCEL</Button>
-                <Button variant="contained" color="primary" disabled={this.hasErrors()} onClick={() => onSubmit()({ name, email, password })}>SUBMIT</Button>
+                <Button variant="contained" color="primary" disabled={this.hasErrors()} onClick={() => onSubmit()({ Name, Email, Password })}>SUBMIT</Button>
               </div>
             </DialogContent>
           </Dialog>
