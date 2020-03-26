@@ -15,7 +15,7 @@ export default class Math extends Component {
     } = this.props;
     const answer = this.result(first, second, operator);
     return (children !== undefined) ? (<p>{children(first, second, operator, answer)}</p>)
-      : (<p>{`${first} ${operator} ${second} = ${answer}`}</p>);
+      : (<p>{`${first + operator + second} = ${answer}`}</p>);
   }
 }
 
@@ -27,5 +27,5 @@ Math.propTypes = {
 };
 
 Math.defaultProps = {
-  children: undefined,
+  children: '',
 };

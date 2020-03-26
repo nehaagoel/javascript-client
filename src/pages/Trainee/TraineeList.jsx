@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Link, BrowserRouter as Router,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, withStyles } from '@material-ui/core';
 import { AddDialog, TableComponent } from './components/index';
 import trainees from './data/trainee';
@@ -87,10 +85,8 @@ class TraineeList extends React.Component {
     );
   }
 }
-
 TraineeList.propTypes = {
   match: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(useStyles)(TraineeList);
