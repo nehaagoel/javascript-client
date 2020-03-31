@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, withStyles } from '@material-ui/core';
-import { AddDialog } from './components/index';
+import { AddDialog, TableComponent } from './components/index';
 import trainees from './data/trainee';
 
 const useStyles = (theme) => ({
@@ -13,6 +13,7 @@ const useStyles = (theme) => ({
     textAlign: 'right',
   },
 });
+
 
 class TraineeList extends React.Component {
   constructor(props) {
@@ -46,10 +47,30 @@ class TraineeList extends React.Component {
     return (
       <>
         <div className={classes.root}>
-          <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+          <div className={classes.dialog}>
+            <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
         ADD TRAINEELIST
-          </Button>
-          <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
+            </Button>
+            <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
+          </div>
+        &nbsp;
+        &nbsp;
+          <TableComponent
+            data={trainees}
+            column={
+              [
+                {
+                  field: 'name',
+                  label: 'Name',
+                  align: 'center',
+                },
+                {
+                  field: 'email',
+                  label: 'Email Address',
+                },
+              ]
+            }
+          />
           <ul>
             {trainees.map(({ name, id }) => (
               <li key={id}>

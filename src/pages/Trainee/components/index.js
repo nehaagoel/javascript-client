@@ -1,1 +1,4 @@
-export { AddDialog } from './AddDialog/index';
+import AddDialog from './AddDialog/AddDialog';
+import TableComponent from './TableComponent/TableComponent';
+
+export { AddDialog, TableComponent };
