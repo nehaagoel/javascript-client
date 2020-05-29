@@ -19,6 +19,7 @@ const useStyles = (theme) => ({
     },
     '&:hover': {
       backgroundColor: 'rgb(200,200,200)',
+      cursor: 'pointer',
     },
   },
 });
@@ -32,21 +33,21 @@ function TableComponent(props) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            {
-              column.map(({ align, label }) => (
-                <TableCell
-                  className={classes.header}
-                  align={align}
-                  sortDirection={orderBy === label ? order : false}
+            {column.map((Data) => (
+              <TableCell
+                className={classes.header}
+                align={Data.align}
+                sortDirection={orderBy === Data.label ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === Data.label}
+                  direction={orderBy === Data.label ? order : 'asc'}
+                  onClick={onSort(Data.label)}
                 >
-                  <TableSortLabel
-                    direction={orderBy === data.id ? order : 'asc'}
-                  >
-                    {label}
-                  </TableSortLabel>
-                </TableCell>
-              ))
-            }
+                  {Data.label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
