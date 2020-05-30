@@ -71,6 +71,7 @@ class TraineeList extends React.Component {
         &nbsp;
         &nbsp;
           <TableComponent
+            id="id"
             data={trainees}
             column={
               [
