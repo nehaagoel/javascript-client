@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
   TableContainer, Table, TableHead, TableRow, TableBody, TableCell,
-  Paper, withStyles, TableSortLabel,
+  Paper, withStyles, TableSortLabel, TablePagination, IconButton,
 } from '@material-ui/core';
 
 const useStyles = (theme) => ({
@@ -26,7 +25,8 @@ const useStyles = (theme) => ({
 
 function TableComponent(props) {
   const {
-    classes, data, column, order, orderBy, onSort, onSelect,
+    classes, data, column, order, orderBy, onSort, onSelect, actions, count, page,
+    rowsPerPage, onChangePage, onChangeRowsPerPage,
   } = props;
   return (
     <TableContainer component={Paper}>
@@ -64,10 +64,25 @@ function TableComponent(props) {
                     : element[field]}
                 </TableCell>
               ))}
+              {actions.map(({ Icon, handler }) => (
+                <IconButton onClick={handler(element)} className={classes.action}>
+                  {Icon}
+                </IconButton>
+              ))}
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <TablePagination
+        className={classes.pages}
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={count}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={onChangePage}
+        onChangeRowsPerPage={onChangeRowsPerPage}
+      />
     </TableContainer>
   );
 }
@@ -79,6 +94,11 @@ TableComponent.propTypes = {
   order: PropTypes.string,
   orderBy: PropTypes.string,
   onSort: PropTypes.func,
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  count: PropTypes.number.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
 };
 TableComponent.defaultProps = {
   order: 'asc',

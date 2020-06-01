@@ -36,105 +36,104 @@ class Login extends React.Component {
     this.setState({ [key]: value });
   };
 
-    hasErrors = () => {
+  hasErrors = () => {
+    try {
+      schema.validateSync(this.state);
+    } catch (err) {
+      return true;
+    }
+    return false;
+  }
+
+  getError = (field) => {
+    const { touched } = this.state;
+    if (touched[field] && this.hasErrors()) {
       try {
-        schema.validateSync(this.state);
+        schema.validateSyncAt(field, this.state);
+        return false;
       } catch (err) {
-        return true;
+        return err.message;
       }
-      return false;
     }
+  };
 
-    // eslint-disable-next-line consistent-return
-    getError = (field) => {
-      const { touched } = this.state;
-      if (touched[field] && this.hasErrors()) {
-        try {
-          schema.validateSyncAt(field, this.state);
-          return false;
-        } catch (err) {
-          return err.message;
-        }
-      }
-    };
+  isTouched = (field) => {
+    const { touched } = this.state;
+    this.setState({
+      touched: {
+        ...touched,
+        [field]: true,
+      },
+    });
+  }
 
-    isTouched = (field) => {
-      const { touched } = this.state;
-      this.setState({
-        touched: {
-          ...touched,
-          [field]: true,
-        },
-      });
-    }
-
-    render() {
-      const { classes } = this.props;
-      return (
-        <>
-          <div className={classes.main}>
-            <CssBaseline />
-            <Card open aria-labelledby="form-dialog-title">
-              <Avatar className={classes.icon}>
-                <LockOutlined />
-              </Avatar>
-              <Typography variant="h3" align="center">Login</Typography>
-              <CardContent>
-                <form>
-                  <div>
-                    <TextField
-                      helperText={this.getError('email')}
-                      error={!!this.getError('email')}
-                      required
-                      id="outlined-required"
-                      label="Email Address"
-                      defaultValue=" "
-                      variant="outlined"
-                      fullWidth
-                      onChange={this.handleChange('email')}
-                      onBlur={() => this.isTouched('email')}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Email />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </div>
+  render() {
+    const { classes } = this.props;
+    return (
+      <>
+        <div className={classes.main}>
+          <CssBaseline />
+          <Card open aria-labelledby="form-dialog-title">
+            <Avatar className={classes.icon}>
+              <LockOutlined />
+            </Avatar>
+            <Typography variant="h3" align="center">Login</Typography>
+            <CardContent>
+              <form>
+                <div>
+                  <TextField
+                    helperText={this.getError('email')}
+                    error={!!this.getError('email')}
+                    required
+                    id="outlined-required"
+                    label="Email Address"
+                    defaultValue=" "
+                    variant="outlined"
+                    fullWidth
+                    onChange={this.handleChange('email')}
+                    onBlur={() => this.isTouched('email')}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Email />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </div>
               &nbsp;
-                  <div>
-                    <TextField
-                      type="password"
-                      helperText={this.getError('password')}
-                      error={!!this.getError('password')}
-                      required
-                      id="outlined-required"
-                      label="Password"
-                      variant="outlined"
-                      fullWidth
-                      onChange={this.handleChange('password')}
-                      onBlur={() => this.isTouched('password')}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <VisibilityOff />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </div>
+                <div>
+                  <TextField
+                    type="password"
+                    helperText={this.getError('password')}
+                    error={!!this.getError('password')}
+                    required
+                    id="outlined-required"
+                    label="Password"
+                    variant="outlined"
+                    fullWidth
+                    onChange={this.handleChange('password')}
+                    onBlur={() => this.isTouched('password')}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <VisibilityOff />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </div>
               &nbsp;
-                  <div>
-                    <Button variant="contained" color="primary" disabled={this.hasErrors()} fullWidth>SIGN IN</Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-        </>
-      );
-    }
+                <div>
+                  <Button variant="contained" color="primary" disabled={this.hasErrors()} fullWidth>SIGN IN</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </>
+    );
+  }
 }
 Login.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
