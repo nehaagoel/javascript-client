@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,6 +9,7 @@ import {
   DialogTitle,
   Button,
 } from '@material-ui/core';
+import { snackbarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
   button_color: {
@@ -41,9 +40,14 @@ function DeleteDialog(props) {
           <Button onClick={onClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={remove} color="primary" autoFocus className={classes.button_color}>
+          <snackbarContext.Consumer>
+            {(value) => (
+              <Button onClick={() => remove(value)} color="primary" autoFocus className={classes.button_color}>
             Delete
-          </Button>
+                {/* onClick={remove} */}
+              </Button>
+            )}
+          </snackbarContext.Consumer>
         </DialogActions>
       </Dialog>
     </div>

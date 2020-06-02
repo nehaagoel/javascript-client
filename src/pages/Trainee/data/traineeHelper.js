@@ -1,3 +1,5 @@
+import { getDateFormatted } from './trainee';
+
 const columns = [
   {
     field: 'name',
@@ -12,6 +14,7 @@ const columns = [
     field: 'createdAt',
     label: 'Date',
     align: 'right',
+    format: getDateFormatted,
   },
 ];
 

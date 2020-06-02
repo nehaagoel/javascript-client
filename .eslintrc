@@ -23,7 +23,10 @@
       "react/prop-types": "off",
       "react/no-children-prop": "off",
       "max-len": "off",
-      "react/no-unused-state": "off"
+      "react/no-unused-state": "off",
+      "no-shadow": "off",
+      "object-shorthand": "off",
+      "react/destructuring-assignment": "off"
     },
     "parserOptions": {
       "ecmaVersion": 6,

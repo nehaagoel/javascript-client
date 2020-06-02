@@ -1,10 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import * as yup from 'yup';
 import {
+  withStyles, Grid,
   TextField,
   Dialog,
   DialogActions,
@@ -14,9 +12,8 @@ import {
   Button,
   InputAdornment,
 } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import EmailIcon from '@material-ui/icons/Email';
-import PersonIcon from '@material-ui/icons/Person';
+import { Email, Person } from '@material-ui/icons';
+import { snackbarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
   button_color: {
@@ -60,7 +57,6 @@ class EditDialog extends React.Component {
     });
   };
 
-  // eslint-disable-next-line consistent-return
   getError = (field) => {
     const { error } = this.state;
     this.schema
@@ -118,7 +114,7 @@ class EditDialog extends React.Component {
                 <TextField
                   autoFocus
                   error={!!error.name}
-                  id="name"
+                  id="outlined-required"
                   type="text"
                   variant="outlined"
                   style={{ width: '100%' }}
@@ -130,7 +126,7 @@ class EditDialog extends React.Component {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <PersonIcon />
+                        <Person />
                       </InputAdornment>
                     ),
                   }}
@@ -141,8 +137,8 @@ class EditDialog extends React.Component {
               <Grid item xs={12}>
                 <TextField
                   error={!!error.email}
-                  id="email"
-                  type="email"
+                  id="outlined-required"
+                  type="text"
                   variant="outlined"
                   style={{ width: '100%' }}
                   margin="dense"
@@ -152,7 +148,7 @@ class EditDialog extends React.Component {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <EmailIcon />
+                        <Email />
                       </InputAdornment>
                     ),
                   }}
@@ -167,20 +163,24 @@ class EditDialog extends React.Component {
             <Button onClick={handleEditClose} color="primary">
               Cancel
             </Button>
-            <Button
-              onClick={() => handleEdit(name, email)}
-              className={
-                (name === data.name && email === data.email) || this.hasErrors()
-                  ? classes.button_error
-                  : classes.button_color
-              }
-              color="primary"
-              disabled={
-                !!((name === data.name && email === data.email) || this.hasErrors())
-              }
-            >
+            <snackbarContext.Consumer>
+              {(value) => (
+                <Button
+                  onClick={() => handleEdit(name, email, value)}
+                  className={
+                    (name === data.name && email === data.email) || this.hasErrors()
+                      ? classes.button_error
+                      : classes.button_color
+                  }
+                  color="primary"
+                  disabled={
+                    !!((name === data.name && email === data.email) || this.hasErrors())
+                  }
+                >
               Submit
-            </Button>
+                </Button>
+              )}
+            </snackbarContext.Consumer>
           </DialogActions>
         </Dialog>
       </div>
