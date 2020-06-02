@@ -66,7 +66,7 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleChangePage = (newPage) => (event) => {
+  handleChangePage = (event, newPage) => {
     this.setState({
       page: newPage,
     });
