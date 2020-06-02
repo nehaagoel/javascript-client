@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { Email, VisibilityOff, Person } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import { snackbarContext } from '../../../../contexts/index';
+import { snackbarContext } from '../../../../contexts/SnackBarProvider';
 import schema from './DialogSchema';
 import Handler from './Handler';
 
