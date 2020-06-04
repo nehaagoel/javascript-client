@@ -109,7 +109,7 @@ class AddDialog extends React.Component {
           <DialogTitle id="form-dialog-title">Add Trainee</DialogTitle>
           <DialogContent>
             <DialogContentText>
-            Enter your trainee details
+              Enter your trainee details
             </DialogContentText>
             <div>{ans[0]}</div>
             <br />

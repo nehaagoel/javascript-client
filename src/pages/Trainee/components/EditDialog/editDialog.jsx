@@ -177,7 +177,7 @@ class EditDialog extends React.Component {
                     !!((name === data.name && email === data.email) || this.hasErrors())
                   }
                 >
-              Submit
+                  Submit
                 </Button>
               )}
             </snackbarContext.Consumer>
