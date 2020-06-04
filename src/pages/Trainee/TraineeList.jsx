@@ -135,15 +135,6 @@ class TraineeList extends React.Component {
     value(message, status);
   };
 
-  handlesnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({
-      snackbarOpen: false,
-    });
-  };
-
   render() {
     const {
       open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen,
@@ -154,7 +145,7 @@ class TraineeList extends React.Component {
         <div className={classes.root}>
           <div className={classes.dialog}>
             <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          ADD TRAINEELIST
+              ADD TRAINEELIST
             </Button>
             <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
           </div>

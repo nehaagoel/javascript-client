@@ -18,41 +18,50 @@ const useStyles = () => ({
   },
 });
 
-function DeleteDialog(props) {
-  const {
-    openRemove, onClose, remove, classes,
-  } = props;
-  return (
-    <div>
-      <Dialog
-        open={openRemove}
-        variant="outlined"
-        color="primary"
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Remove Trainee</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Do you really want to remove Trainee ?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose} color="primary">
-            Cancel
-          </Button>
-          <snackbarContext.Consumer>
-            {(value) => (
-              <Button onClick={() => remove(value)} color="primary" autoFocus className={classes.button_color}>
-            Delete
-                {/* onClick={remove} */}
-              </Button>
-            )}
-          </snackbarContext.Consumer>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+class DeleteDialog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
+  render() {
+    const {
+      openRemove, onClose, remove, classes,
+    } = this.props;
+    return (
+      <div>
+        <Dialog
+          open={openRemove}
+          variant="outlined"
+          color="primary"
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Remove Trainee</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Do you really want to remove Trainee ?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onClose} color="primary">
+              Cancel
+            </Button>
+            <snackbarContext.Consumer>
+              {(value) => (
+                <Button onClick={() => remove(value)} color="primary" autoFocus className={classes.button_color}>
+                  Delete
+                </Button>
+              )}
+            </snackbarContext.Consumer>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
 }
+
 DeleteDialog.propTypes = {
   openRemove: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

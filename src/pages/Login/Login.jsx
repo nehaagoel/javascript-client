@@ -81,14 +81,11 @@ class Login extends React.Component {
       loader: true,
     });
     await callApi('post', '/user/login/', { email, password }, value);
-    console.log('call api', email, password);
     this.setState({
       disabled: false,
       loader: false,
     });
-    console.log('after call api');
     if (localStorage.get('token')) {
-      console.log('in if call api');
       this.setState({
         redirect: true,
       });
