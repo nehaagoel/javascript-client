@@ -15,11 +15,15 @@
       "no-param-reassign": "off",
       "no-eval": "off",
       "consistent-return": "off",
+      "next-line consistent-return": "off",
       "react/forbid-prop-types": "off",
       "no-unused-vars": "off",
       "react/jsx-props-no-spreading": "off",
       "no-console": "off",
-      "react/no-children-prop": "off"
+      "react/prop-types": "off",
+      "react/no-children-prop": "off",
+      "max-len": "off",
+      "react/no-unused-state": "off"
     },
     "parserOptions": {
       "ecmaVersion": 6,

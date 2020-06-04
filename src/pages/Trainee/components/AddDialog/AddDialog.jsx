@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -88,6 +89,7 @@ class AddDialog extends React.Component {
       const {
         open, onClose, onSubmit, classes,
       } = this.props;
+      // eslint-disable-next-line no-shadow
       const { Name, Email, Password } = this.state;
       const ans = [];
       Object.keys(constant).forEach((key) => {
