@@ -108,16 +108,6 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleEdit = (name, email, value) => {
-    this.setState({
-      EditOpen: false,
-    });
-    console.log({ name, email });
-    const message = 'This is a success message';
-    const status = 'success';
-    value(message, status);
-  };
-
   render() {
     const {
       open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData,
@@ -134,8 +124,7 @@ class TraineeList extends React.Component {
           </div>
           <EditDialog
             Editopen={EditOpen}
-            handleEditClose={this.handleEditClose}
-            handleEdit={this.handleEdit}
+            EditClose={this.handleEditClose}
             data={editData}
           />
           <br />
