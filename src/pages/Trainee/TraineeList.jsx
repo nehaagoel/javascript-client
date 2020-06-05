@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   Button, withStyles,
 } from '@material-ui/core';
-import * as moment from 'moment';
 import { Delete, Edit } from '@material-ui/icons';
 import {
   AddDialog, TableComponent, EditDialog, DeleteDialog,
@@ -96,22 +95,6 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleRemove = (value) => {
-    const { deleteData } = this.state;
-    this.setState({
-      RemoveOpen: false,
-    });
-    console.log('Deleted Item');
-    console.log(deleteData);
-    const { createdAt } = deleteData;
-    const isAfter = moment(createdAt).isSameOrAfter('2019-02-14T18:15:11.778Z');
-    const message = isAfter
-      ? 'This is a success message!'
-      : 'This is an error message!';
-    const status = isAfter ? 'success' : 'error';
-    value(message, status);
-  };
-
   handleEditDialogOpen = (element) => (event) => {
     this.setState({
       EditOpen: true,
@@ -137,7 +120,7 @@ class TraineeList extends React.Component {
 
   render() {
     const {
-      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen,
+      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData,
     } = this.state;
     const { classes } = this.props;
     return (
@@ -159,12 +142,12 @@ class TraineeList extends React.Component {
           <DeleteDialog
             openRemove={RemoveOpen}
             onClose={this.handleRemoveClose}
-            remove={this.handleRemove}
+            deletedData={deleteData}
           />
           <br />
           <br />
           <TableComponent
-            id="id"
+            id="table"
             data={trainees}
             column={columns}
             actions={[
