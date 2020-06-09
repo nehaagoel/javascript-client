@@ -4,8 +4,8 @@ import {
   TextField, Typography, CardContent, InputAdornment, Button, Avatar, Card, CssBaseline, withStyles, CircularProgress,
 } from '@material-ui/core';
 import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
-import localStorage from 'local-storage';
 import { Redirect } from 'react-router-dom';
+import localStorage from 'local-storage';
 import { schema } from '../../config/constants';
 import callApi from '../../libs/utils/api';
 import { snackbarContext } from '../../contexts/index';
@@ -80,12 +80,12 @@ class Login extends React.Component {
       disabled: true,
       loader: true,
     });
-    await callApi('post', '/user/login/', { email, password }, value);
+    await callApi('post', '/user/login', { email, password }, value);
     this.setState({
       disabled: false,
       loader: false,
     });
-    if (localStorage.get('token')) {
+    if (localStorage.set('token')) {
       this.setState({
         redirect: true,
       });

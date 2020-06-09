@@ -4,3 +4,4 @@ export { default as SelectField } from './Select/SelectField';
 export { default as RadioField } from './Radio/RadioField';
 export { default as ButtonField } from './Button/Button';
 export { default as Math } from './Math/Math';
+export { default as withLoaderandMessage } from './HOC/index';

@@ -4,6 +4,7 @@ import {
   TableContainer, Table, TableHead, TableRow, TableBody, TableCell,
   Paper, withStyles, TableSortLabel, TablePagination, IconButton,
 } from '@material-ui/core';
+import { withLoaderandMessage } from '../../../../components/index';
 
 const useStyles = (theme) => ({
   table: {
@@ -105,4 +106,5 @@ TableComponent.defaultProps = {
   orderBy: '',
   onSort: () => {},
 };
-export default withStyles(useStyles)(TableComponent);
+const WrapTable = withLoaderandMessage(TableComponent);
+export default withStyles(useStyles)(WrapTable);

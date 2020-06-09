@@ -4,11 +4,14 @@ import {
   Button, withStyles,
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
+import localStorage from 'local-storage';
 import {
-  AddDialog, TableComponent, EditDialog, DeleteDialog,
+  AddDialog, WrapTable, EditDialog, DeleteDialog,
 } from './components/index';
-import { trainees, getDateFormatted } from './data/trainee';
+import { trainees } from './data/trainee';
+import callApi from '../../libs/utils/api';
 import columns from './data/traineeHelper';
+import { snackbarContext } from '../../contexts/index';
 
 const useStyles = (theme) => ({
   root: {
@@ -26,13 +29,55 @@ class TraineeList extends React.Component {
       open: false,
       orderBy: '',
       order: 'asc',
+      loader: false,
       EditOpen: false,
       RemoveOpen: false,
       editData: {},
+      data: {},
       deleteData: {},
       page: 0,
       rowsPerPage: 10,
     };
+  }
+
+  async componentDidMount() {
+    console.log('component');
+    const token = localStorage.get('token');
+    const { loader } = this.state;
+    this.setState({
+      loader: true,
+    });
+    console.log('loader is', loader);
+    const response = await callApi(
+      'get',
+      '/trainee',
+      {
+        params: {
+          skip: 0,
+          limit: 20,
+        },
+      },
+      {
+        headers: {
+          authorization: token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      this.setState({
+        rowsPerPage: 20,
+        data: response.data.records,
+        loader: false,
+      });
+    } else {
+      const value = this.context;
+      value(response.message, 'error');
+      this.setState({
+        loader: false,
+      });
+    }
   }
 
   handleClickOpen = () => {
@@ -110,7 +155,7 @@ class TraineeList extends React.Component {
 
   render() {
     const {
-      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData,
+      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData, loader, data,
     } = this.state;
     const { classes } = this.props;
     return (
@@ -135,8 +180,10 @@ class TraineeList extends React.Component {
           />
           <br />
           <br />
-          <TableComponent
+          <WrapTable
             id="table"
+            loader={loader}
+            datalength={trainees.length}
             data={trainees}
             column={columns}
             actions={[
@@ -169,3 +216,4 @@ TraineeList.propTypes = {
 };
 
 export default withStyles(useStyles)(TraineeList);
+TraineeList.contextType = snackbarContext;

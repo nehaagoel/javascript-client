@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Dialog, DialogTitle, DialogContent, DialogContentText,
+  Button, Dialog, DialogTitle, DialogContent, DialogContentText, CircularProgress,
 } from '@material-ui/core';
 import { Email, VisibilityOff, Person } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import { snackbarContext } from '../../../../contexts/SnackBarProvider';
 import schema from './DialogSchema';
 import Handler from './Handler';
+import callApi from '../../../../libs/utils/api';
 
 const passwordStyle = () => ({
   passfield: {
@@ -34,6 +35,8 @@ class AddDialog extends React.Component {
       Email: '',
       Password: '',
       ConfirmPassword: '',
+      loader: false,
+      disabled: true,
       touched: {
         name: false,
         email: false,
@@ -85,11 +88,43 @@ class AddDialog extends React.Component {
     return '';
   }
 
+  submitHandler = async (value) => {
+    const { name, email, password } = this.state;
+    const token = localStorage.getItem('token');
+    const { onSubmit } = this.props;
+    await this.setState({
+      loader: true,
+      disabled: true,
+    });
+    const response = await callApi(
+      'post',
+      '/trainee',
+      { data: { name, email, password } },
+      {
+        headers: {
+          authorization: token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      onSubmit({ name, email, password });
+      value(response.message, 'success');
+    } else {
+      value(response.message, 'error');
+    }
+    this.setState({
+      loader: false,
+      disabled: false,
+    });
+  };
+
   render() {
     const {
-      open, onClose, onSubmit, classes,
+      open, onClose, classes,
     } = this.props;
-    const { Name, Email, Password } = this.state;
+    const { loader } = this.state;
     const ans = [];
     Object.keys(constant).forEach((key) => {
       ans.push(<Handler
@@ -126,7 +161,13 @@ class AddDialog extends React.Component {
               <Button onClick={onClose} color="primary">CANCEL</Button>
               <snackbarContext.Consumer>
                 {(value) => (
-                  <Button variant="contained" color="primary" disabled={this.hasErrors()} onClick={() => onSubmit()({ Name, Email, Password })}>SUBMIT</Button>
+                  <Button variant="contained" color="primary" disabled={this.hasErrors()} onClick={() => this.submitHandler(value)}>
+                    <span>
+                      {loader ? <CircularProgress size={20} /> : ''}
+                    </span>
+                    SUBMIT
+                  </Button>
+
                 )}
               </snackbarContext.Consumer>
             </div>
@@ -141,6 +182,5 @@ export default withStyles(passwordStyle)(AddDialog);
 AddDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
