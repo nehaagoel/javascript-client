@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { Link, Route } from 'react-router-dom';
 import NotFound from '../NoMatch';
-import trainees from './data/trainee';
+import { trainees } from './data/trainee';
 
 const styling = (theme) => ({
   root: {

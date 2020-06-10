@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import {
   Button, withStyles,
 } from '@material-ui/core';
+import * as moment from 'moment';
 import { Delete, Edit } from '@material-ui/icons';
 import {
   AddDialog, TableComponent, EditDialog, DeleteDialog,
 } from './components/index';
-import trainees from './data/trainee';
+import { trainees, getDateFormatted } from './data/trainee';
 import columns from './data/traineeHelper';
 
 const useStyles = (theme) => ({
@@ -43,13 +44,16 @@ class TraineeList extends React.Component {
     this.setState({ open: false });
   };
 
-  handleSubmit = (data) => {
+  handleSubmit = (data, value) => {
     this.setState({
       open: false,
     }, () => {
       console.log(data);
     });
-  }
+    const message = 'This is Success Message';
+    const status = 'success';
+    value(message, status);
+  };
 
   handleSelect = (element) => (event) => {
     this.setState({
@@ -92,12 +96,20 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleRemove = () => {
+  handleRemove = (value) => {
     const { deleteData } = this.state;
     this.setState({
       RemoveOpen: false,
     });
+    console.log('Deleted Item');
     console.log(deleteData);
+    const { createdAt } = deleteData;
+    const isAfter = moment(createdAt).isSameOrAfter('2019-02-14T18:15:11.778Z');
+    const message = isAfter
+      ? 'This is a success message!'
+      : 'This is an error message!';
+    const status = isAfter ? 'success' : 'error';
+    value(message, status);
   };
 
   handleEditDialogOpen = (element) => (event) => {
@@ -113,11 +125,14 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleEdit = (name, email) => {
+  handleEdit = (name, email, value) => {
     this.setState({
       EditOpen: false,
     });
     console.log({ name, email });
+    const message = 'This is a success message';
+    const status = 'success';
+    value(message, status);
   };
 
   render() {
@@ -130,7 +145,7 @@ class TraineeList extends React.Component {
         <div className={classes.root}>
           <div className={classes.dialog}>
             <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          ADD TRAINEELIST
+              ADD TRAINEELIST
             </Button>
             <AddDialog open={open} onClose={this.handleClose} onSubmit={() => this.handleSubmit} />
           </div>
