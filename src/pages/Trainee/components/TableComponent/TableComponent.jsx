@@ -52,31 +52,30 @@ function TableComponent(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((element) => (
-            <TableRow
-              key={element.id}
-              className={classes.root}
-              onMouseEnter={onSelect(element)}
-            >
-              {column.map(({ field, align, format }) => (
-                <TableCell align={align}>
-                  {format !== undefined
-                    ? format(element[field])
-                    : element[field]}
+          {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((element) => (
+              <TableRow key={element.id} className={classes.root}>
+                {column.map(({ field, align, format }) => (
+                  <TableCell align={align} onClick={onSelect(element)}>
+                    {format !== undefined
+                      ? format(element[field])
+                      : element[field]}
+                  </TableCell>
+                ))}
+                <TableCell>
+                  {actions.map(({ Icon, handler }) => (
+                    <IconButton onClick={handler(element)} className={classes.action}>
+                      {Icon}
+                    </IconButton>
+                  ))}
                 </TableCell>
-              ))}
-              {actions.map(({ Icon, handler }) => (
-                <IconButton onClick={handler(element)} className={classes.action}>
-                  {Icon}
-                </IconButton>
-              ))}
-            </TableRow>
-          ))}
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       <TablePagination
         className={classes.pages}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[5, 10, 20, 25]}
         component="div"
         count={count}
         rowsPerPage={rowsPerPage}

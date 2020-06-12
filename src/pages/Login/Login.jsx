@@ -28,7 +28,6 @@ class Login extends React.Component {
     super(props);
     this.state = {
       loader: false,
-      disabled: true,
       redirect: false,
       email: '',
       password: '',
@@ -77,18 +76,22 @@ class Login extends React.Component {
   onClickHandler = async (value) => {
     const { email, password } = this.state;
     await this.setState({
-      disabled: true,
       loader: true,
     });
-    await callApi('post', '/user/login', { email, password }, value);
+    const response = await callApi('post', '/user/login', { data: {email, password} },
+     value);
+     const token = localStorage.set('token', response.data);
+     console.log('login token isss', token);
     this.setState({
-      disabled: false,
       loader: false,
     });
-    if (localStorage.set('token')) {
+    if (token) {
       this.setState({
         redirect: true,
       });
+    }
+    else {
+      value(response.message, 'error')
     }
   };
 

@@ -8,7 +8,6 @@ import localStorage from 'local-storage';
 import {
   AddDialog, WrapTable, EditDialog, DeleteDialog,
 } from './components/index';
-import { trainees } from './data/trainee';
 import callApi from '../../libs/utils/api';
 import columns from './data/traineeHelper';
 import { snackbarContext } from '../../contexts/index';
@@ -29,11 +28,12 @@ class TraineeList extends React.Component {
       open: false,
       orderBy: '',
       order: 'asc',
-      loader: false,
+      loader: true,
       EditOpen: false,
       RemoveOpen: false,
       editData: {},
-      data: {},
+      addData: [],
+      traineedata: {},
       deleteData: {},
       page: 0,
       rowsPerPage: 10,
@@ -41,13 +41,6 @@ class TraineeList extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('component');
-    const token = localStorage.get('token');
-    const { loader } = this.state;
-    this.setState({
-      loader: true,
-    });
-    console.log('loader is', loader);
     const response = await callApi(
       'get',
       '/trainee',
@@ -56,10 +49,8 @@ class TraineeList extends React.Component {
           skip: 0,
           limit: 20,
         },
-      },
-      {
         headers: {
-          authorization: token,
+          authorization: localStorage.get('token'),
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
@@ -101,7 +92,7 @@ class TraineeList extends React.Component {
 
   handleSelect = (element) => (event) => {
     this.setState({
-      data: element,
+      traineedata: element,
     });
   };
 
@@ -155,7 +146,7 @@ class TraineeList extends React.Component {
 
   render() {
     const {
-      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData, loader, data,
+      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData, loader, addData,
     } = this.state;
     const { classes } = this.props;
     return (
@@ -183,8 +174,8 @@ class TraineeList extends React.Component {
           <WrapTable
             id="table"
             loader={loader}
-            datalength={trainees.length}
-            data={trainees}
+            datalength={addData.length}
+            data={addData}
             column={columns}
             actions={[
               {
