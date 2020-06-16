@@ -4,13 +4,14 @@ import {
   Button, withStyles,
 } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
-import localStorage from 'local-storage';
+import ls from 'local-storage';
 import {
   AddDialog, WrapTable, EditDialog, DeleteDialog,
 } from './components/index';
 import callApi from '../../libs/utils/api';
 import columns from './data/traineeHelper';
 import { snackbarContext } from '../../contexts/index';
+import { trainees } from './data/trainee';
 
 const useStyles = (theme) => ({
   root: {
@@ -59,7 +60,7 @@ class TraineeList extends React.Component {
     if (response.status === 'ok') {
       this.setState({
         rowsPerPage: 20,
-        data: response.data.records,
+        addData: response.data.records,
         loader: false,
       });
     } else {
@@ -83,7 +84,7 @@ class TraineeList extends React.Component {
     this.setState({
       open: false,
     }, () => {
-      console.log(data);
+      trainees.push({ name: data.Name, email: data.Email, password: data.Password });
     });
     const message = 'This is Success Message';
     const status = 'success';
@@ -174,8 +175,8 @@ class TraineeList extends React.Component {
           <WrapTable
             id="table"
             loader={loader}
-            datalength={addData.length}
-            data={addData}
+            datalength={trainees.length}
+            data={trainees}
             column={columns}
             actions={[
               {

@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
 import { Redirect } from 'react-router-dom';
-import localStorage from 'local-storage';
+import ls from 'local-storage';
 import { schema } from '../../config/constants';
 import callApi from '../../libs/utils/api';
 import { snackbarContext } from '../../contexts/index';
@@ -78,10 +78,9 @@ class Login extends React.Component {
     await this.setState({
       loader: true,
     });
-    const response = await callApi('post', '/user/login', { data: {email, password} },
-     value);
-     const token = localStorage.set('token', response.data);
-     console.log('login token isss', token);
+    const response = await callApi('post', '/user/login', { data: { email, password } },
+      value);
+    const token = ls.set('token', response.data);
     this.setState({
       loader: false,
     });
@@ -89,9 +88,8 @@ class Login extends React.Component {
       this.setState({
         redirect: true,
       });
-    }
-    else {
-      value(response.message, 'error')
+    } else {
+      value(response.message, 'error');
     }
   };
 
