@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import {
   Button, withStyles,
 } from '@material-ui/core';
-import * as moment from 'moment';
 import { Delete, Edit } from '@material-ui/icons';
+import ls from 'local-storage';
 import {
-  AddDialog, TableComponent, EditDialog, DeleteDialog,
+  AddDialog, WrapTable, EditDialog, DeleteDialog,
 } from './components/index';
-import { trainees, getDateFormatted } from './data/trainee';
+import callApi from '../../libs/utils/api';
 import columns from './data/traineeHelper';
+import { snackbarContext } from '../../contexts/index';
+import { trainees } from './data/trainee';
 
 const useStyles = (theme) => ({
   root: {
@@ -27,13 +29,47 @@ class TraineeList extends React.Component {
       open: false,
       orderBy: '',
       order: 'asc',
+      loader: true,
       EditOpen: false,
       RemoveOpen: false,
       editData: {},
+      addData: [],
+      traineedata: {},
       deleteData: {},
       page: 0,
       rowsPerPage: 10,
     };
+  }
+
+  async componentDidMount() {
+    const response = await callApi(
+      'get',
+      '/trainee',
+      {
+        params: {
+          skip: 0,
+          limit: 20,
+        },
+        headers: {
+          authorization: localStorage.get('token'),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      this.setState({
+        rowsPerPage: 20,
+        addData: response.data.records,
+        loader: false,
+      });
+    } else {
+      const value = this.context;
+      value(response.message, 'error');
+      this.setState({
+        loader: false,
+      });
+    }
   }
 
   handleClickOpen = () => {
@@ -48,7 +84,7 @@ class TraineeList extends React.Component {
     this.setState({
       open: false,
     }, () => {
-      console.log(data);
+      trainees.push({ name: data.Name, email: data.Email, password: data.Password });
     });
     const message = 'This is Success Message';
     const status = 'success';
@@ -57,7 +93,7 @@ class TraineeList extends React.Component {
 
   handleSelect = (element) => (event) => {
     this.setState({
-      data: element,
+      traineedata: element,
     });
   };
 
@@ -96,22 +132,6 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleRemove = (value) => {
-    const { deleteData } = this.state;
-    this.setState({
-      RemoveOpen: false,
-    });
-    console.log('Deleted Item');
-    console.log(deleteData);
-    const { createdAt } = deleteData;
-    const isAfter = moment(createdAt).isSameOrAfter('2019-02-14T18:15:11.778Z');
-    const message = isAfter
-      ? 'This is a success message!'
-      : 'This is an error message!';
-    const status = isAfter ? 'success' : 'error';
-    value(message, status);
-  };
-
   handleEditDialogOpen = (element) => (event) => {
     this.setState({
       EditOpen: true,
@@ -125,19 +145,9 @@ class TraineeList extends React.Component {
     });
   };
 
-  handleEdit = (name, email, value) => {
-    this.setState({
-      EditOpen: false,
-    });
-    console.log({ name, email });
-    const message = 'This is a success message';
-    const status = 'success';
-    value(message, status);
-  };
-
   render() {
     const {
-      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen,
+      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData, loader, addData,
     } = this.state;
     const { classes } = this.props;
     return (
@@ -151,20 +161,21 @@ class TraineeList extends React.Component {
           </div>
           <EditDialog
             Editopen={EditOpen}
-            handleEditClose={this.handleEditClose}
-            handleEdit={this.handleEdit}
+            EditClose={this.handleEditClose}
             data={editData}
           />
           <br />
           <DeleteDialog
             openRemove={RemoveOpen}
             onClose={this.handleRemoveClose}
-            remove={this.handleRemove}
+            deletedData={deleteData}
           />
           <br />
           <br />
-          <TableComponent
-            id="id"
+          <WrapTable
+            id="table"
+            loader={loader}
+            datalength={trainees.length}
             data={trainees}
             column={columns}
             actions={[
@@ -197,3 +208,4 @@ TraineeList.propTypes = {
 };
 
 export default withStyles(useStyles)(TraineeList);
+TraineeList.contextType = snackbarContext;

@@ -91,16 +91,24 @@ class EditDialog extends React.Component {
     return !!iserror.length;
   };
 
+  handleEdit = (name, email, value, EditClose) => {
+    EditClose();
+    console.log({ name, email });
+    const message = 'This is a success message';
+    const status = 'success';
+    value(message, status);
+  };
+
   render() {
     const {
-      Editopen, handleEditClose, handleEdit, data, classes,
+      Editopen, handleEdit, data, classes, EditClose,
     } = this.props;
     const { name, email, error } = this.state;
     return (
       <div>
         <Dialog
           open={Editopen}
-          onClose={handleEditClose}
+          onClose={EditClose}
           onMouseEnter={this.handleSet}
           variant="outlined"
           color="primary"
@@ -160,13 +168,13 @@ class EditDialog extends React.Component {
             <br />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleEditClose} color="primary">
+            <Button onClick={EditClose} color="primary">
               Cancel
             </Button>
             <snackbarContext.Consumer>
               {(value) => (
                 <Button
-                  onClick={() => handleEdit(name, email, value)}
+                  onClick={() => this.handleEdit(name, email, value, EditClose)}
                   className={
                     (name === data.name && email === data.email) || this.hasErrors()
                       ? classes.button_error
@@ -189,7 +197,7 @@ class EditDialog extends React.Component {
 }
 EditDialog.propTypes = {
   Editopen: PropTypes.bool.isRequired,
-  handleEditClose: PropTypes.func.isRequired,
+  EditClose: PropTypes.func.isRequired,
   handleEdit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };

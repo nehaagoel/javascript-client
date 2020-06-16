@@ -34,6 +34,8 @@ class AddDialog extends React.Component {
       Email: '',
       Password: '',
       ConfirmPassword: '',
+      loader: false,
+      disabled: true,
       touched: {
         name: false,
         email: false,
@@ -87,7 +89,7 @@ class AddDialog extends React.Component {
 
   render() {
     const {
-      open, onClose, onSubmit, classes,
+      open, onClose, classes, onSubmit,
     } = this.props;
     const { Name, Email, Password } = this.state;
     const ans = [];
@@ -126,7 +128,10 @@ class AddDialog extends React.Component {
               <Button onClick={onClose} color="primary">CANCEL</Button>
               <snackbarContext.Consumer>
                 {(value) => (
-                  <Button variant="contained" color="primary" disabled={this.hasErrors()} onClick={() => onSubmit()({ Name, Email, Password })}>SUBMIT</Button>
+                  <Button variant="contained" color="primary" disabled={this.hasErrors()} onClick={() => onSubmit()({ Name, Email, Password }, value)}>
+                    SUBMIT
+                  </Button>
+
                 )}
               </snackbarContext.Consumer>
             </div>
