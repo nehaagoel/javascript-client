@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  TextField, Typography, CardContent, InputAdornment, Button, Avatar, Card, CssBaseline, withStyles,
+  TextField, Typography, CardContent, InputAdornment, Button, Avatar, Card, CssBaseline, withStyles, CircularProgress,
 } from '@material-ui/core';
 import { Email, VisibilityOff, LockOutlined } from '@material-ui/icons';
+import { Redirect } from 'react-router-dom';
+import ls from 'local-storage';
 import { schema } from '../../config/constants';
+import callApi from '../../libs/utils/api';
+import { snackbarContext } from '../../contexts/index';
 
 const Design = (theme) => ({
   icon: {
@@ -23,6 +27,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loader: false,
+      redirect: false,
       email: '',
       password: '',
       touched: {
@@ -67,8 +73,33 @@ class Login extends React.Component {
     });
   }
 
+  onClickHandler = async (value) => {
+    const { email, password } = this.state;
+    await this.setState({
+      loader: true,
+    });
+    const response = await callApi('post', '/user/login', { data: { email, password } },
+      value);
+    const token = ls.set('token', response.data);
+    this.setState({
+      loader: false,
+    });
+    token ? this.setState({
+      redirect: true,
+    })
+      : value(response.message, 'error');
+  };
+
+  renderRedirect = () => {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/trainee" />;
+    }
+  };
+
   render() {
     const { classes } = this.props;
+    const { loader } = this.state;
     return (
       <>
         <div className={classes.main}>
@@ -87,7 +118,6 @@ class Login extends React.Component {
                     required
                     id="outlined-required"
                     label="Email Address"
-                    defaultValue=" "
                     variant="outlined"
                     fullWidth
                     onChange={this.handleChange('email')}
@@ -123,9 +153,17 @@ class Login extends React.Component {
                     }}
                   />
                 </div>
-              &nbsp;
+                <br />
                 <div>
-                  <Button variant="contained" color="primary" disabled={this.hasErrors()} fullWidth>SIGN IN</Button>
+                  <snackbarContext.Consumer>
+                    {(value) => (
+                      <Button variant="contained" color="primary" onClick={() => this.onClickHandler(value)} disabled={this.hasErrors()} fullWidth>
+                        {this.renderRedirect()}
+                        <span>{loader ? <CircularProgress size={20} /> : ''}</span>
+                        SIGN IN
+                      </Button>
+                    )}
+                  </snackbarContext.Consumer>
                 </div>
               </form>
             </CardContent>
@@ -135,6 +173,7 @@ class Login extends React.Component {
     );
   }
 }
+
 Login.propTypes = {
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };

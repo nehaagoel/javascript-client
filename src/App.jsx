@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router, Switch, Redirect, Route,
 } from 'react-router-dom';
+import localStorage from 'local-storage';
 import Login from './pages/Login/Login';
 import {
   TextFieldDemo, InputDemo, ChildrenDemo, Trainee, NotFound,
@@ -14,9 +15,15 @@ function App() {
     <SnackbarProvider>
       <Router>
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/trainee" />
-          </Route>
+          {localStorage.get('token') ? (
+            <Route exact path="/">
+              <Redirect to="/trainee" />
+            </Route>
+          ) : (
+            <Route exact path="/">
+              <Redirect to="/login" />
+            </Route>
+          )}
           <AuthRoute exact path="/login" component={Login} />
           <PrivateRoute exact path="/input-demo" component={InputDemo} />
           <PrivateRoute exact path="/textfield-demo" component={TextFieldDemo} />

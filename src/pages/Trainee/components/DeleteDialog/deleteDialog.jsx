@@ -9,6 +9,8 @@ import {
   DialogTitle,
   Button,
 } from '@material-ui/core';
+import ls from 'local-storage';
+import callApi from '../../../../libs/utils/api';
 import { snackbarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
@@ -22,13 +24,58 @@ class DeleteDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      loader: false,
+      count: 100,
+      page: 0,
+      rowsPerPage: 10,
     };
   }
 
+  handleRemove = (deletedData, onClose) => {
+    onClose();
+    console.log('Deleted Item');
+    console.log(deletedData);
+    const { count, rowsPerPage, page } = this.state;
+    const mod = count % rowsPerPage;
+    if (mod === 1) {
+      this.setState({
+        page: page - 1,
+      });
+    }
+  };
+
+  onClickHandler = async (value) => {
+    const token = ls.get('token');
+    const { deletedData, onClose } = this.props;
+    const { originalId: id } = deletedData;
+    await this.setState({
+      loader: true,
+    });
+    const response = await callApi(
+      'delete',
+      `/trainee/${id}`,
+      {
+        headers: {
+          authorization: token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      this.handleRemove(deletedData, onClose);
+      value(response.message, 'success');
+    } else {
+      value(response.message, 'error');
+    }
+    this.setState({
+      loader: false,
+    });
+  };
+
   render() {
     const {
-      openRemove, onClose, remove, classes,
+      openRemove, onClose, deletedData, classes,
     } = this.props;
     return (
       <div>
@@ -50,7 +97,7 @@ class DeleteDialog extends React.Component {
             </Button>
             <snackbarContext.Consumer>
               {(value) => (
-                <Button onClick={() => remove(value)} color="primary" autoFocus className={classes.button_color}>
+                <Button onClick={() => this.onClickHandler(value)} color="primary" autoFocus className={classes.button_color}>
                   Delete
                 </Button>
               )}
@@ -65,7 +112,6 @@ class DeleteDialog extends React.Component {
 DeleteDialog.propTypes = {
   openRemove: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  remove: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 export default withStyles(useStyles)(DeleteDialog);
