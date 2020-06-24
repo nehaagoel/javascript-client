@@ -9,7 +9,8 @@ import {
   DialogTitle,
   Button,
 } from '@material-ui/core';
-import * as moment from 'moment';
+import ls from 'local-storage';
+import callApi from '../../../../libs/utils/api';
 import { snackbarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
@@ -23,21 +24,53 @@ class DeleteDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      loader: false,
+      count: 100,
+      page: 0,
+      rowsPerPage: 10,
     };
   }
 
-  handleRemove = (value, deletedData, onClose) => {
+  handleRemove = (deletedData, onClose) => {
     onClose();
     console.log('Deleted Item');
     console.log(deletedData);
-    const { createdAt } = deletedData;
-    const isAfter = moment(createdAt).isSameOrAfter('2019-02-14T18:15:11.778Z');
-    const message = isAfter
-      ? 'This is a success message!'
-      : 'This is an error message!';
-    const status = isAfter ? 'success' : 'error';
-    value(message, status);
+    const { count, rowsPerPage, page } = this.state;
+    const mod = count % rowsPerPage;
+    if (mod === 1) {
+      this.setState({
+        page: page - 1,
+      });
+    }
+  };
+
+  onClickHandler = async (value) => {
+    const token = ls.get('token');
+    const { deletedData, onClose } = this.props;
+    const { originalId: id } = deletedData;
+    await this.setState({
+      loader: true,
+    });
+    const response = await callApi(
+      'delete',
+      `/trainee/${id}`,
+      {
+        headers: {
+          authorization: token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      this.handleRemove(deletedData, onClose);
+      value(response.message, 'success');
+    } else {
+      value(response.message, 'error');
+    }
+    this.setState({
+      loader: false,
+    });
   };
 
   render() {
@@ -64,7 +97,7 @@ class DeleteDialog extends React.Component {
             </Button>
             <snackbarContext.Consumer>
               {(value) => (
-                <Button onClick={() => this.handleRemove(value, deletedData, onClose)} color="primary" autoFocus className={classes.button_color}>
+                <Button onClick={() => this.onClickHandler(value)} color="primary" autoFocus className={classes.button_color}>
                   Delete
                 </Button>
               )}

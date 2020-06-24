@@ -12,7 +12,9 @@ import {
   Button,
   InputAdornment,
 } from '@material-ui/core';
+import ls from 'local-storage';
 import { Email, Person } from '@material-ui/icons';
+import callApi from '../../../../libs/utils/api';
 import { snackbarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
@@ -36,6 +38,7 @@ class EditDialog extends React.Component {
     this.state = {
       name: '',
       email: '',
+      loader: false,
       error: {
         name: '',
         email: '',
@@ -91,13 +94,38 @@ class EditDialog extends React.Component {
     return !!iserror.length;
   };
 
-  handleEdit = (name, email, value, EditClose) => {
+  handleEdit = (name, email, EditClose) => {
     EditClose();
     console.log({ name, email });
-    const message = 'This is a success message';
-    const status = 'success';
-    value(message, status);
   };
+
+  onClickHandler = async (value) => {
+    const { name, email } = this.state;
+    const token = ls.get('token');
+    const { EditClose, data } = this.props;
+    const { originalId: id } = data;
+    const response = await callApi(
+      'put',
+      '/trainee',
+      {
+        data: { name, email, id },
+        headers: {
+          authorization: token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      this.handleEdit(name, email, EditClose);
+      value(response.message, 'success');
+    } else {
+      value(response.message, 'error');
+    }
+    this.setState({
+      loader: false,
+    });
+  }
 
   render() {
     const {
@@ -174,7 +202,7 @@ class EditDialog extends React.Component {
             <snackbarContext.Consumer>
               {(value) => (
                 <Button
-                  onClick={() => this.handleEdit(name, email, value, EditClose)}
+                  onClick={() => this.onClickHandler(value)}
                   className={
                     (name === data.name && email === data.email) || this.hasErrors()
                       ? classes.button_error
@@ -198,7 +226,6 @@ class EditDialog extends React.Component {
 EditDialog.propTypes = {
   Editopen: PropTypes.bool.isRequired,
   EditClose: PropTypes.func.isRequired,
-  handleEdit: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 export default withStyles(useStyles)(EditDialog);

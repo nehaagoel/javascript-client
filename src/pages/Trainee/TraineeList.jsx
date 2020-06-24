@@ -11,7 +11,6 @@ import {
 import callApi from '../../libs/utils/api';
 import columns from './data/traineeHelper';
 import { snackbarContext } from '../../contexts/index';
-import { trainees } from './data/trainee';
 
 const useStyles = (theme) => ({
   root: {
@@ -36,40 +35,14 @@ class TraineeList extends React.Component {
       addData: [],
       traineedata: {},
       deleteData: {},
+      count: 100,
       page: 0,
       rowsPerPage: 10,
     };
   }
 
   async componentDidMount() {
-    const response = await callApi(
-      'get',
-      '/trainee',
-      {
-        params: {
-          skip: 0,
-          limit: 20,
-        },
-        headers: {
-          authorization: localStorage.get('token'),
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    if (response.status === 'ok') {
-      this.setState({
-        rowsPerPage: 20,
-        addData: response.data.records,
-        loader: false,
-      });
-    } else {
-      const value = this.context;
-      value(response.message, 'error');
-      this.setState({
-        loader: false,
-      });
-    }
+    this.handleFetch();
   }
 
   handleClickOpen = () => {
@@ -81,10 +54,12 @@ class TraineeList extends React.Component {
   };
 
   handleSubmit = (data, value) => {
+    const { addData } = this.state;
+    this.handleFetch();
     this.setState({
       open: false,
     }, () => {
-      trainees.push({ name: data.Name, email: data.Email, password: data.Password });
+      addData.push({ name: data.Name, email: data.Email, password: data.Password });
     });
     const message = 'This is Success Message';
     const status = 'success';
@@ -145,9 +120,41 @@ class TraineeList extends React.Component {
     });
   };
 
+  async handleFetch() {
+    const token = ls.get('token');
+    const response = await callApi(
+      'get',
+      '/trainee',
+      {
+        params: {
+          skip: 0,
+          limit: 100,
+        },
+        headers: {
+          authorization: token,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (response.status === 'ok') {
+      this.setState({
+        count: response.data.records.length,
+        addData: response.data.records,
+        loader: false,
+      });
+    } else {
+      const value = this.context;
+      value(response.message, 'error');
+      this.setState({
+        loader: false,
+      });
+    }
+  }
+
   render() {
     const {
-      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData, loader, addData,
+      open, order, orderBy, editData, page, rowsPerPage, EditOpen, RemoveOpen, deleteData, loader, addData, count,
     } = this.state;
     const { classes } = this.props;
     return (
@@ -175,8 +182,8 @@ class TraineeList extends React.Component {
           <WrapTable
             id="table"
             loader={loader}
-            datalength={trainees.length}
-            data={trainees}
+            datalength={addData.length}
+            data={addData}
             column={columns}
             actions={[
               {
@@ -192,7 +199,7 @@ class TraineeList extends React.Component {
             orderBy={orderBy}
             order={order}
             onSelect={this.handleSelect}
-            count={100}
+            count={count}
             page={page}
             rowsPerPage={rowsPerPage}
             onChangePage={this.handleChangePage}

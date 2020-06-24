@@ -84,13 +84,10 @@ class Login extends React.Component {
     this.setState({
       loader: false,
     });
-    if (token) {
-      this.setState({
-        redirect: true,
-      });
-    } else {
-      value(response.message, 'error');
-    }
+    token ? this.setState({
+      redirect: true,
+    })
+      : value(response.message, 'error');
   };
 
   renderRedirect = () => {
@@ -121,7 +118,6 @@ class Login extends React.Component {
                     required
                     id="outlined-required"
                     label="Email Address"
-                    defaultValue=" "
                     variant="outlined"
                     fullWidth
                     onChange={this.handleChange('email')}
