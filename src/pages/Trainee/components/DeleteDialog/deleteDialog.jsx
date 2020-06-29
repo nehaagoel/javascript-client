@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Button,
 } from '@material-ui/core';
+import * as moment from 'moment';
 import { snackbarContext } from '../../../../contexts/index';
 
 const useStyles = () => ({
@@ -26,9 +27,22 @@ class DeleteDialog extends React.Component {
     };
   }
 
+  handleRemove = (value, deletedData, onClose) => {
+    onClose();
+    console.log('Deleted Item');
+    console.log(deletedData);
+    const { createdAt } = deletedData;
+    const isAfter = moment(createdAt).isSameOrAfter('2019-02-14T18:15:11.778Z');
+    const message = isAfter
+      ? 'This is a success message!'
+      : 'This is an error message!';
+    const status = isAfter ? 'success' : 'error';
+    value(message, status);
+  };
+
   render() {
     const {
-      openRemove, onClose, remove, classes,
+      openRemove, onClose, deletedData, classes,
     } = this.props;
     return (
       <div>
@@ -50,7 +64,7 @@ class DeleteDialog extends React.Component {
             </Button>
             <snackbarContext.Consumer>
               {(value) => (
-                <Button onClick={() => remove(value)} color="primary" autoFocus className={classes.button_color}>
+                <Button onClick={() => this.handleRemove(value, deletedData, onClose)} color="primary" autoFocus className={classes.button_color}>
                   Delete
                 </Button>
               )}
@@ -65,7 +79,6 @@ class DeleteDialog extends React.Component {
 DeleteDialog.propTypes = {
   openRemove: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  remove: PropTypes.func.isRequired,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 export default withStyles(useStyles)(DeleteDialog);
