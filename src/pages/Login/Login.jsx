@@ -84,10 +84,11 @@ class Login extends React.Component {
     this.setState({
       loader: false,
     });
-    token ? this.setState({
-      redirect: true,
-    })
-      : value(response.message, 'error');
+    response.status === 'ok'
+      ? this.setState({
+        redirect: true,
+      })
+      : value('Incorrect Crendentials', 'error');
   };
 
   renderRedirect = () => {
